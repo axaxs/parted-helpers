@@ -18,7 +18,7 @@ def label_fs(fstype, part, label):
     # in a dictionary.  So 'part' and 'label' will be defined
     # and replaced in above dic
     try:
-        y = subprocess.check_call(shlex.split(ladic[fstype] % vars()))
+        y = subprocess.check_call(shlex.split(ladic[fstype] % vars())).decode()
         ret = (0, y)
     except Exception as e:
         ret = (1, e)
@@ -62,7 +62,7 @@ def create_fs(part, fstype, label='', other_opts=None):
              'btrfs':'mkfs.btrfs -L %(label)s %(other_opts)s %(part)s',
              'swap':'mkswap %(part)s'}
     try:
-        y = subprocess.check_output(shlex.split(comdic[fstype] % vars()))
+        y = subprocess.check_output(shlex.split(comdic[fstype] % vars())).decode()
         ret = (0, y)
     except Exception as e:
         ret = (1, e)

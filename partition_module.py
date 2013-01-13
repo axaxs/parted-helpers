@@ -1,4 +1,6 @@
 import parted
+import subprocess
+import shlex
 
 
 def get_devices():
@@ -114,6 +116,13 @@ def check_mounted(part):
         return 1
     else:
         return 0
+
+def get_used_space(part):
+    path = part.path
+    x = subprocess.check_output(shlex.split('df -H %s' % path)).decode()
+    y = x.split('\n')
+    z = y[1].split()[2]
+    return z
 
 def get_largest_size(diskob, part):
     #Call this to set the initial size of new partition in frontend, but also the MAX to which user may enter.  
