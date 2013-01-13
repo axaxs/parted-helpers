@@ -25,7 +25,7 @@ def label_fs(fstype, part, label):
         # check_call returns exit code.  0 should mean success
     return ret
 
-def create_fs(part, fstype, other_opts=None):
+def create_fs(part, fstype, label='', other_opts=None):
     #set some default options
     #-m 1 reserves 1% for root, because I think 5% is too much on
     #newer bigger drives.  
