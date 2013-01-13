@@ -30,6 +30,11 @@ def create_fs(part, fstype, label='', other_opts=None):
     #-m 1 reserves 1% for root, because I think 5% is too much on
     #newer bigger drives.  
     #Also turn on dir_index for ext.  Not sure about other fs opts
+
+    #The return value is tuple.  First arg is 0 for success, 1 for fail
+    #Secong arg is either output from call if successful
+    #or exception if failure
+
     opt_dic = {'ext2':'-m 1',
                'ext3':'-m 1 -O dir_index',
                'ext4':'-m 1 -O dir_index',

@@ -70,6 +70,10 @@ def get_partitions(diskob):
 def delete_partition(diskob, part):
     diskob.deletePartition(part)
 
+def get_partition_size(diskob, part):
+    dev = diskob.device
+    sec_size = dev.sectorSize
+    mbs = (sec_size * part.length) / 1000000   
 
 def create_partition(diskob, part_type, geom):
     #A lot of this is similar to Anaconda, but customized to fit our needs
@@ -116,6 +120,7 @@ def get_largest_size(diskob, part):
     dev = diskob.device
     sec_size = dev.sectorSize
     mbs = (sec_size * part.length) / 1000000
+    return mbs
 
 '''HERE ARE PARTITION FLAGS.  We will likely just use 1, 2 and 3)
 	        PED_PARTITION_BOOT=1,
@@ -134,12 +139,24 @@ def get_largest_size(diskob, part):
 74	        PED_PARTITION_DIAG=14,
 75	        PED_PARTITION_LEGACY_BOOT=15
 '''
-
+#The return value is tuple.  First arg is 0 for success, 1 for fail
+#Secong arg is either None if successful
+#or exception if failure
 def set_flag(flagno, part):
-    part.setFlag(flagno)
+    ret = (0, None)
+    try:
+        part.setFlag(flagno)
+    except Exception as e:
+        ret = (1, e)
+    return ret
 
 def unset_flag(flagno, part):
-    part.unsetFlag(flagono)
+    ret = (0, None)
+    try:
+        part.setFlag(flagno)
+    except Exception as e:
+        ret = (1, e)
+    return ret
 
 def get_flags(part):
     return part.getFlagsAsString
