@@ -119,9 +119,12 @@ def check_mounted(part):
 
 def get_used_space(part):
     path = part.path
-    x = subprocess.check_output(shlex.split('df -H %s' % path)).decode()
-    y = x.split('\n')
-    z = y[1].split()[2]
+    try:
+        x = subprocess.check_output(shlex.split('df -H %s' % path)).decode()
+        y = x.split('\n')
+        z = y[1].split()[2]
+    except:
+        z = 0
     return z
 
 def get_largest_size(diskob, part):
